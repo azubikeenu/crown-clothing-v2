@@ -4,6 +4,12 @@ import {
   createUserDoc,
 } from '../../utils/firebase.utils';
 
+import FormInput from '../form-input/form-input.component';
+
+import Button from '../button/button.component';
+
+import './sign-up-form.styles.scss';
+
 const SignUpForm = () => {
   const defaultFields = {
     displayName: '',
@@ -45,42 +51,46 @@ const SignUpForm = () => {
     setFormFields({ ...formFields, [name]: value });
   };
   return (
-    <div>
-      <h1>Sign up with your email and password</h1>
+    <div className="sign-up-form-container">
+      <h2>Dont have an account ?</h2>
+      <p>Sign up with your email and password</p>
       <form onSubmit={handleSubmit}>
-        <label>Display name</label>
-        <input
+        <FormInput
+          label="Display Name"
           type="text"
           required
-          name="displayName"
           onChange={handleChange}
+          name="displayName"
           value={displayName}
         />
-        <label>Email</label>
-        <input
+
+        <FormInput
+          label="Email"
           type="email"
           required
-          name="email"
           onChange={handleChange}
+          name="email"
           value={email}
         />
-        <label>Password</label>
-        <input
+
+        <FormInput
+          label="Password"
           type="password"
           required
-          name="password"
           onChange={handleChange}
+          name="password"
           value={password}
         />
-        <label>Confirm Password</label>
-        <input
+
+        <FormInput
+          label="Confirm Password"
           type="password"
           required
-          name="confirmPassword"
           onChange={handleChange}
+          name="confirmPassword"
           value={confirmPassword}
         />
-        <button type="submit">Sign Up</button>
+        <Button type="submit">Sign Up</Button>
       </form>
     </div>
   );
