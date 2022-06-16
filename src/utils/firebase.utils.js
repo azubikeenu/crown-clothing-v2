@@ -25,6 +25,7 @@ initializeApp(firebaseConfig);
 
 const googleProvider = new GoogleAuthProvider();
 
+// use select account prompt
 googleProvider.setCustomParameters({
   prompt: 'select_account',
 });
@@ -39,12 +40,13 @@ export const signInWithGoogleRedirect = () =>
 
 // Store the user in the database
 
+// get the dbinstance
 export const db = getFirestore();
 
 export const createUserDoc = async (userAuth, objProps = {}) => {
   if (!userAuth) return;
   // get the database reference
-  const userDocRef = doc(db, 'users', userAuth.uid); // dbInstance , collectionName , userAuthenticationId(uid)
+  const userDocRef = doc(db, 'users', userAuth.uid); // dbInstance , collectionName/identifier , userAuthenticationId(uid)
   // get the document snapshot
   const userSnapShot = await getDoc(userDocRef);
 
@@ -52,6 +54,7 @@ export const createUserDoc = async (userAuth, objProps = {}) => {
     const { displayName, email } = userAuth;
     const createdAt = new Date();
     try {
+      // set the document and store in the database
       await setDoc(userDocRef, { displayName, email, createdAt, ...objProps });
     } catch (err) {
       console.log('Error Creating the user', err.message);

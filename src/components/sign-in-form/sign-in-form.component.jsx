@@ -15,7 +15,6 @@ import {
 } from '../../utils/firebase.utils';
 
 const SignInForm = () => {
-
   const defaultFields = {
     email: '',
     password: '',
@@ -50,7 +49,8 @@ const SignInForm = () => {
   const sigInWithGoogle = async () => {
     try {
       const { user: userAuth } = await signInWithGooglePopUp();
-      await createUserDoc(userAuth);
+      const userDocRef = await createUserDoc( userAuth );
+      setCurrentUser(userDocRef)
     } catch (err) {
       if (
         err.code === 'auth/cancelled-popup-request' ||
