@@ -6,11 +6,13 @@ import { UserContext } from '../../../contexts/user.context';
 import { signOutUser } from '../../../utils/firebase.utils';
 
 const Navigation = () => {
-  const { currentUser, setCurrentUser } = useContext(UserContext);
+  // whenever a value inside the UseContext(currentUser) updates , the component is re-rendered
+  const { currentUser } = useContext(UserContext);
+
   const signOutHandler = async () => {
-   await signOutUser();
-   setCurrentUser(null)
+    await signOutUser();
   };
+
   return (
     <Fragment>
       <div className="navigation">

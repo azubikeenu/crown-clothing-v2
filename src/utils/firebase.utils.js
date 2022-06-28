@@ -7,6 +7,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  onAuthStateChanged,
 } from 'firebase/auth';
 
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
@@ -44,12 +45,12 @@ export const signInWithGoogleRedirect = () =>
 export const db = getFirestore();
 
 export const createUserDoc = async (userAuth, objProps = {}) => {
-  if (!userAuth) return;
+  if (!userAuth || !db) return;
   // get the database reference
   const userDocRef = doc(db, 'users', userAuth.uid); // dbInstance , collectionName/identifier , userAuthenticationId(uid)
   // get the document snapshot
   const userSnapShot = await getDoc(userDocRef);
-
+  // Only create a new document if the snapshot doesnt exist
   if (!userSnapShot.exists()) {
     const { displayName, email } = userAuth;
     const createdAt = new Date();
@@ -64,6 +65,7 @@ export const createUserDoc = async (userAuth, objProps = {}) => {
 };
 
 export const createAuthUserWithEmailAndPassword = async (email, password) => {
+  if (!email || !password) return;
   return await createUserWithEmailAndPassword(auth, email, password);
 };
 
@@ -76,3 +78,6 @@ export const signInAuthUserWithEmailAndPassword = async (
 };
 
 export const signOutUser = async () => await signOut(auth);
+
+export const onAuthStateChangedListener = (callback) =>
+  onAuthStateChanged(auth, callback);

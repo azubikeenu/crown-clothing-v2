@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import {
   createAuthUserWithEmailAndPassword,
   createUserDoc,
@@ -8,7 +8,7 @@ import FormInput from '../form-input/form-input.component';
 
 import Button from '../button/button.component';
 
-import { UserContext } from '../../contexts/user.context';
+
 
 import './sign-up-form.styles.scss';
 
@@ -22,7 +22,7 @@ const SignUpForm = () => {
   const [formFields, setFormFields] = useState(defaultFields);
   const { displayName, email, password, confirmPassword } = formFields;
 
-  const { setCurrentUser } = useContext(UserContext);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,21 +34,24 @@ const SignUpForm = () => {
         email,
         password
       );
+
+      if (!user) {
+        throw new Error('The user could not be created');
+      }
       await createUserDoc(user, { displayName });
-      setCurrentUser(user);
+
       resetFormFields();
+
     } catch (err) {
       if (err.code === 'auth/email-already-in-use') {
-        alert('Cannot Register user , Email already in use');
+        return alert('Cannot Register user , Email already in use');
       } else {
-        console.log(err.message);
+        console.log('An Error occured during signup', err.message);
       }
     }
   };
 
-  const resetFormFields = () => {
-    setFormFields(defaultFields);
-  };
+  const resetFormFields = () => setFormFields(defaultFields);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
