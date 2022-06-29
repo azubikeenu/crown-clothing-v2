@@ -1,9 +1,13 @@
 import { Outlet, Link } from 'react-router-dom';
 import { Fragment, useContext } from 'react';
 import { ReactComponent as Logo } from '../../../assets/crown.svg';
-import './navigation.styles.scss';
+import CartIcon from '../../cart-icon/cart-icon.component';
+import CartDropdown from '../../cart-dropdown/cartdropdown.component';
+
 import { UserContext } from '../../../contexts/user.context';
 import { signOutUser } from '../../../utils/firebase.utils';
+
+import './navigation.styles.scss';
 
 const Navigation = () => {
   // whenever a value inside the UseContext(currentUser) updates , the component is re-rendered
@@ -33,7 +37,9 @@ const Navigation = () => {
               SIGN IN
             </Link>
           )}
+         <CartIcon/>
         </div>
+        <CartDropdown/>
       </div>
       <Outlet />
     </Fragment>
