@@ -9,7 +9,6 @@ import {
   signInAuthUserWithEmailAndPassword,
   auth,
 } from '../../utils/firebase.utils';
-
 const SignInForm = () => {
   const defaultFields = {
     email: '',
