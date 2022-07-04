@@ -10,7 +10,7 @@ export const UserContext = createContext({
   setCurrentUser: () => null,
 });
 
-// this is a component wrapper that gives child compoents access to the user context
+// this is a component wrapper that gives child compoents accecss to the user context
 export const UserProvider = ({ children }) => {
   // observing the authenticationState
   useEffect(() => {
