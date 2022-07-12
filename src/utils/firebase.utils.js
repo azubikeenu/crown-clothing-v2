@@ -10,7 +10,16 @@ import {
   onAuthStateChanged,
 } from 'firebase/auth';
 
-import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  collection,
+  writeBatch,
+  getDocs,
+  query,
+} from 'firebase/firestore';
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: 'AIzaSyDlZFNYHtORaNWUlfFJOOMSHu-KIZvgWMY',
@@ -44,6 +53,34 @@ export const signInWithGoogleRedirect = () =>
 // get the dbinstance
 export const db = getFirestore();
 
+// create seed data
+export const createSeedData = async (key, objects, field) => {
+  const collectionRef = collection(db, key);
+  // create a batch writer function
+  const batch = writeBatch(db);
+  objects.forEach((object) => {
+    // get the documentRef
+    const documentRef = doc(collectionRef, object[field].toLowerCase());
+    // create a batch set for write function
+    batch.set(documentRef, object);
+  });
+  await batch.commit();
+  console.log('Done');
+};
+// get collections and documents
+
+export const getCategories = async () => {
+  const collectionRef = collection(db, 'categories');
+  const q = query(collectionRef);
+  const querySnapShot = await getDocs(q);
+
+  return querySnapShot.docs.reduce((acc, docSnapShot) => {
+    const { title, items } = docSnapShot.data();
+    acc[title.toLowerCase()] = items;
+    return acc;
+  }, {});
+
+};
 export const createUserDoc = async (userAuth, objProps = {}) => {
   if (!userAuth || !db) return;
   // get the database reference

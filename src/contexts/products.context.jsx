@@ -1,15 +1,28 @@
+import { useEffect } from 'react';
 import { createContext, useState } from 'react';
 
-import SHOP_DATA from '../shop-data.json';
+import { getCategories } from '../utils/firebase.utils';
+
 export const ProductsContext = createContext({
   products: [],
   setProducts: () => null,
 });
 
 export const ProductsProvider = ({ children }) => {
-  const [products, setProducts] = useState(SHOP_DATA);
+  useEffect(() => {
+    const getCatgeoriesMap = async () => {
+      const categories = await getCategories();
+      console.log(categories);
+    };
+
+    getCatgeoriesMap();
+  }, []);
+
+  const [products, setProducts] = useState([]);
   const value = { products, setProducts };
   return (
-    <ProductsContext.Provider value={value}>{children}</ProductsContext.Provider>
+    <ProductsContext.Provider value={value}>
+      {children}
+    </ProductsContext.Provider>
   );
 };
