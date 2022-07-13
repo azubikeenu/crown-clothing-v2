@@ -1,4 +1,4 @@
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { Fragment, useContext } from 'react';
 import { ReactComponent as Logo } from '../../../assets/crown.svg';
 import CartIcon from '../../cart-icon/cart-icon.component';
@@ -9,7 +9,12 @@ import { CartContext } from '../../../contexts/cart.context';
 
 import { signOutUser } from '../../../utils/firebase.utils';
 
-import './navigation.styles.scss';
+import {
+  NavigationContainer,
+  LogoContainer,
+  NavLink,
+  NavLinksContainer,
+} from './navigation.styles';
 
 const Navigation = () => {
   // whenever a value inside the UseContext(currentUser) updates , the component is re-rendered
@@ -22,28 +27,24 @@ const Navigation = () => {
 
   return (
     <Fragment>
-      <div className="navigation">
-        <Link to="/" className="logo-container">
+      <NavigationContainer>
+        <LogoContainer to="/">
           <Logo className="logo" />
-        </Link>
-        <div className="nav-links-container">
-          <Link className="nav-link" to="/shop">
-            SHOP
-          </Link>
+        </LogoContainer>
+        <NavLinksContainer>
+          <NavLink to="/shop">SHOP</NavLink>
           {currentUser ? (
-            <span className="nav-link" onClick={signOutHandler}>
+            <NavLink as="span" onClick={signOutHandler}>
               {' '}
               SIGN OUT
-            </span>
+            </NavLink>
           ) : (
-            <Link className="nav-link" to="/auth">
-              SIGN IN
-            </Link>
+            <NavLink to="/auth">SIGN IN</NavLink>
           )}
           <CartIcon />
-        </div>
+        </NavLinksContainer>
         {isCartOpened && <CartDropdown />}
-      </div>
+      </NavigationContainer>
       <Outlet />
     </Fragment>
   );
