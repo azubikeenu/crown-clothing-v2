@@ -55,6 +55,7 @@ export const db = getFirestore();
 
 // create seed data
 export const createSeedData = async (key, objects, field) => {
+  // creates the colection refrenece
   const collectionRef = collection(db, key);
   // create a batch writer function
   const batch = writeBatch(db);
@@ -64,23 +65,27 @@ export const createSeedData = async (key, objects, field) => {
     // create a batch set for write function
     batch.set(documentRef, object);
   });
+  //this is applied to enable successful transaction
   await batch.commit();
-  console.log('Done');
 };
-// get collections and documents
 
+// get collections and documents
 export const getCategories = async () => {
   const collectionRef = collection(db, 'categories');
+  // this generates a query off the collection reference
   const q = query(collectionRef);
+  // this generates the snapshots of documents in the collection reference
   const querySnapShot = await getDocs(q);
 
+  // mutate to the desired shape
   return querySnapShot.docs.reduce((acc, docSnapShot) => {
     const { title, items } = docSnapShot.data();
     acc[title.toLowerCase()] = items;
     return acc;
   }, {});
-
 };
+
+// create user document
 export const createUserDoc = async (userAuth, objProps = {}) => {
   if (!userAuth || !db) return;
   // get the database reference

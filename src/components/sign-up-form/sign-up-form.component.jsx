@@ -5,7 +5,7 @@ import {
 } from '../../utils/firebase.utils';
 import FormInput from '../form-input/form-input.component';
 import Button from '../button/button.component';
-import './sign-up-form.styles.scss';
+import { SignUpFormContainer } from './sign-up-form.styles';
 
 const SignUpForm = () => {
   const defaultFields = {
@@ -16,8 +16,6 @@ const SignUpForm = () => {
   };
   const [formFields, setFormFields] = useState(defaultFields);
   const { displayName, email, password, confirmPassword } = formFields;
-
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,7 +34,6 @@ const SignUpForm = () => {
       await createUserDoc(user, { displayName });
 
       resetFormFields();
-
     } catch (err) {
       if (err.code === 'auth/email-already-in-use') {
         return alert('Cannot Register user , Email already in use');
@@ -53,7 +50,7 @@ const SignUpForm = () => {
     setFormFields({ ...formFields, [name]: value });
   };
   return (
-    <div className="sign-up-form-container">
+    <SignUpFormContainer>
       <h2>Dont have an account ?</h2>
       <p>Sign up with your email and password</p>
       <form onSubmit={handleSubmit}>
@@ -94,7 +91,7 @@ const SignUpForm = () => {
         />
         <Button type="submit">Sign Up</Button>
       </form>
-    </div>
+    </SignUpFormContainer>
   );
 };
 

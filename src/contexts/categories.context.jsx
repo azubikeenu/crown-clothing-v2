@@ -9,11 +9,10 @@ export const CategoriesProvider = ({ children }) => {
   const [categoriesMap, setCategoriesMap] = useState({});
 
   useEffect(() => {
-    const getCatgeoriesMap = async () => {
+    (async () => {
       const categoryMap = await getCategories();
       setCategoriesMap(categoryMap);
-    };
-    getCatgeoriesMap();
+    })();
   }, []);
 
   const value = { categoriesMap };
