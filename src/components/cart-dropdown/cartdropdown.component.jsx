@@ -4,7 +4,7 @@ import { CartContext } from '../../contexts/cart.context';
 
 import Button from '../button/button.component';
 import CartItem from '../cart-item/cart-item.component';
-import { CartDropdownContainer, CartItems } from './cart-dropdown.styles';
+import { CartDropdownContainer, CartItems, EmptyMessage } from './cart-dropdown.styles';
 
 const CartDropdown = () => {
   const navigate = useNavigate();
@@ -19,7 +19,7 @@ const CartDropdown = () => {
         {cartItems.length ? (
           cartItems.map((item) => <CartItem key={item.id} cartItem={item} />)
         ) : (
-          <span>Your cart is empty </span>
+          <EmptyMessage>Your cart is empty </EmptyMessage>
         )}
       </CartItems>
 

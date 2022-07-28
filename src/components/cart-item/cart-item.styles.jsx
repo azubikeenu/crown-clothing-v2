@@ -5,7 +5,6 @@ export const CartItemContainer = styled.div`
   display: flex;
   height: 80px;
   margin-bottom: 15px;
-
   img {
     width: 30%;
   }
