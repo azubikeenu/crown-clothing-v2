@@ -76,13 +76,14 @@ export const getCategories = async () => {
   const q = query(collectionRef);
   // this generates the snapshots of documents in the collection reference
   const querySnapShot = await getDocs(q);
+  return querySnapShot.docs.map((docSnapshot) => docSnapshot.data());
 
   // mutate to the desired shape
-  return querySnapShot.docs.reduce((acc, docSnapShot) => {
-    const { title, items } = docSnapShot.data();
-    acc[title.toLowerCase()] = items;
-    return acc;
-  }, {});
+  // return querySnapShot.docs.reduce((acc, docSnapShot) => {
+  //   const { title, items } = docSnapShot.data();
+  //   acc[title.toLowerCase()] = items;
+  //   return acc;
+  // }, {});
 };
 
 // create user document

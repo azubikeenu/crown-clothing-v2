@@ -24,6 +24,7 @@ import {
 const Navigation = () => {
   // whenever a value inside the UseContext(currentUser) updates , the component is re-rendered
   // const { currentUser } = useContext(UserContext);
+  // this allows us to interact from a component with the redux store
   const currentUser = useSelector(selectCurrentUser);
 
   const { isCartOpened } = useContext(CartContext);

@@ -19,6 +19,7 @@ const App = () => {
       if (user) {
         await createUserDoc(user);
       }
+      // this dispatches actions to the root reducer which in turns passes the actions to every single reducer dispatch function
       dispatch(setCurrentUser(user));
     });
     return unsubscribe;

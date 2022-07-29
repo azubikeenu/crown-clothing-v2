@@ -29,6 +29,8 @@ export const userReducer = (state, action) => {
 // this is a component wrapper that gives child compoents accecss to the user context
 const INITIAL_STATE = { currentUser: null };
 export const UserProvider = ({ children }) => {
+
+  // the dispatch function would only fire up with the associated userReducer
   const [{ currentUser }, dispatch] = useReducer(userReducer, INITIAL_STATE);
 
   // const [currentUser, setCurrentUser] = useState(null);
@@ -37,7 +39,7 @@ export const UserProvider = ({ children }) => {
     dispatch(createAction(USER_ACTIONS.SET_CURRENT_USER, user));
   };
 
-  // observing the authenticationState
+  // Observing the authenticationState
   useEffect(() => {
     const unsubscribe = onAuthStateChangedListener(async (user) => {
       if (user) {

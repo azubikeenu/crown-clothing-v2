@@ -1,0 +1,3 @@
+export const CATEGORIES_ACTION = {
+  SET_CATEGORIES: 'category/SET_CATEGORIES',
+};
