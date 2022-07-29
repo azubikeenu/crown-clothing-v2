@@ -1,13 +1,18 @@
 import { Outlet } from 'react-router-dom';
 import { Fragment, useContext } from 'react';
+import { useSelector } from 'react-redux/es/hooks/useSelector';
+
 import { ReactComponent as Logo } from '../../../assets/crown.svg';
 import CartIcon from '../../cart-icon/cart-icon.component';
 import CartDropdown from '../../cart-dropdown/cartdropdown.component';
 
-import { UserContext } from '../../../contexts/user.context';
+// import { UserContext } from '../../../contexts/user.context';
+
 import { CartContext } from '../../../contexts/cart.context';
 
 import { signOutUser } from '../../../utils/firebase.utils';
+
+import { selectCurrentUser } from '../../../store/user/user.selector';
 
 import {
   NavigationContainer,
@@ -18,7 +23,9 @@ import {
 
 const Navigation = () => {
   // whenever a value inside the UseContext(currentUser) updates , the component is re-rendered
-  const { currentUser } = useContext(UserContext);
+  // const { currentUser } = useContext(UserContext);
+  const currentUser = useSelector(selectCurrentUser);
+
   const { isCartOpened } = useContext(CartContext);
 
   const signOutHandler = async () => {
