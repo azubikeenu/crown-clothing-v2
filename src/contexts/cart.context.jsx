@@ -69,8 +69,11 @@ export const CartProvider = ({ children }) => {
   // const [cartCount, setCartCount] = useState(0);
   // const [total, setTotal] = useState(0);
 
-  const [state, dispatch] = useReducer(cartReducer, INITIAL_STATE);
-  const { cartItems, cartCount, total, isCartOpened } = state;
+  const [{ cartItems, cartCount, total, isCartOpened }, dispatch] = useReducer(
+    cartReducer,
+    INITIAL_STATE
+  );
+
   const updateCartItems = (newCartItems) => {
     const newTotal =
       newCartItems && newCartItems.length

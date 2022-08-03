@@ -5,17 +5,31 @@ export const CategoriesContext = createContext({
   categoriesMap: {},
 });
 
+
+// Utility function to transform the categories array to a HashMap
+const getCategoriesMap = (categories) => {
+  categories.reduce((acc, category) => {
+    const { title, items } = category;
+    acc[title.toLowerCase()] = items;
+    return acc;
+  }, {});
+};
+
+
 export const CategoriesProvider = ({ children }) => {
   const [categoriesMap, setCategoriesMap] = useState({});
 
+
   useEffect(() => {
     (async () => {
-      const categoryMap = await getCategories();
-      setCategoriesMap(categoryMap);
+      const categories = await getCategories();
+      setCategoriesMap(getCategoriesMap(categories));
     })();
   }, []);
 
+
   const value = { categoriesMap };
+
   return (
     <CategoriesContext.Provider value={value}>
       {children}
