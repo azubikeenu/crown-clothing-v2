@@ -5,7 +5,9 @@ import { BrowserRouter } from 'react-router-dom';
 // import { CategoriesProvider } from './contexts/categories.context';
 // import { CartProvider } from './contexts/cart.context';
 import { Provider } from 'react-redux';
-import { store } from './store/store';
+import { PersistGate } from 'redux-persist/lib/integration/react';
+
+import { store, persistor } from './store/store';
 import App from './App';
 import './index.scss';
 import reportWebVitals from './reportWebVitals';
@@ -16,15 +18,17 @@ const root = createRoot(container);
 root.render(
   // this adds the redux store into our application
   <Provider store={store}>
-    <BrowserRouter>
-      {/* <UserProvider> */}
+    <PersistGate loading={null} persistor={persistor}>
+      <BrowserRouter>
+        {/* <UserProvider> */}
         {/* <CategoriesProvider> */}
-          {/* <CartProvider> */}
-            <App />
-          {/* </CartProvider> */}
+        {/* <CartProvider> */}
+        <App />
+        {/* </CartProvider> */}
         {/* </CategoriesProvider> */}
-      {/* </UserProvider> */}
-    </BrowserRouter>
+        {/* </UserProvider> */}
+      </BrowserRouter>
+    </PersistGate>
   </Provider>
 );
 
