@@ -13,3 +13,16 @@ export const signInSuccess = (userAuth) =>
   createAction(USER_ACTIONS.SIGN_IN_SUCCESS, userAuth);
 export const signInFailure = (error) =>
   createAction(USER_ACTIONS.SIGN_IN_FAILURE, error);
+
+export const signupStart = (email, password, displayName) =>
+  createAction(USER_ACTIONS.SIGN_UP_START, { email, password, displayName });
+
+export const signUpSuccess = (userAuth , objectProperties) =>
+  createAction(USER_ACTIONS.SIGN_UP_SUCCESS, {userAuth , objectProperties});
+
+export const signupFailure = (error) =>
+  createAction(USER_ACTIONS.SIGN_IN_FAILURE, error);
+
+export const signOutStart = ()=> createAction(USER_ACTIONS.SIGN_OUT_START)
+export const signOutSuccess = ()=> createAction(USER_ACTIONS.SIGN_OUT_SUCCESS)
+export const signOutFailure = (error)=> createAction(USER_ACTIONS.SIGN_OUT_FAIURE , error)

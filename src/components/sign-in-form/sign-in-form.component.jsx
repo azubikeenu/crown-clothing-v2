@@ -4,13 +4,11 @@ import FormInput from '../form-input/form-input.component';
 import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
 import './sign-in-form.styles.scss';
 import { SignInFormContainer, ButtonsContainer } from './sign-in-form.styles';
+import { useDispatch } from 'react-redux/es/hooks/useDispatch';
+import { googleSignIn, emailSignIn } from '../../store/user/user.actions';
 
-import {
-  signInWithGooglePopUp,
-  signInAuthUserWithEmailAndPassword,
-  auth,
-} from '../../utils/firebase.utils';
 const SignInForm = () => {
+  const dispatch = useDispatch();
   const defaultFields = {
     email: '',
     password: '',
@@ -18,41 +16,52 @@ const SignInForm = () => {
   const [formFields, setFormFields] = useState(defaultFields);
   const { email, password } = formFields;
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await signInAuthUserWithEmailAndPassword(auth, email, password);
-    } catch (err) {
-      if (
-        err.code === 'auth/wrong-password' ||
-        err.code === 'auth/user-not-found'
-      ) {
-        alert('Incorrect Email or Password');
-      } else {
-        console.err(`An Error Occured `, err.message);
-      }
-    }
-
-    resetFormFields();
-  };
-
-  const sigInWithGoogle = async () => {
-    try {
-      await signInWithGooglePopUp();
-    } catch (err) {
-      if (
-        err.code === 'auth/cancelled-popup-request' ||
-        err.code === 'auth/popup-closed-by-user'
-      ) {
-      } else {
-        console.err(err.message);
-      }
-    }
-  };
-
   const resetFormFields = () => {
     setFormFields(defaultFields);
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    try {
+      dispatch(emailSignIn(email, password));
+      resetFormFields();
+    } catch (error) {
+      console.log('An error occured ' + error);
+    }
+  };
+
+  // async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     await signInAuthUserWithEmailAndPassword(email, password);
+  //   } catch (err) {
+  //     if (
+  //       err.code === 'auth/wrong-password' ||
+  //       err.code === 'auth/user-not-found'
+  //     ) {
+  //       alert('Incorrect Email or Password');
+  //     } else {
+  //       console.err(`An Error Occured `, err.message);
+  //     }
+  //resetFormFields();
+  //   }
+  //;
+
+  const sigInWithGoogle = () => dispatch(googleSignIn());
+
+  //  const sigInWithGoogle = () => async () => {
+  //     try {
+  //       await signInWithGooglePopUp();
+  //     } catch (err) {
+  //       if (
+  //         err.code === 'auth/cancelled-popup-request' ||
+  //         err.code === 'auth/popup-closed-by-user'
+  //       ) {
+  //       } else {
+  //         console.err(err.message);
+  //       }
+  //     }
+  //   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;

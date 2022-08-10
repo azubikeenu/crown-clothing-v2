@@ -17,6 +17,7 @@ const CheckoutItem = ({ cartItem }) => {
     dispatch(addItemToCart(cartItem, cartItems));
   const decrementQuantityHandler = () =>
     dispatch(decrementCount(cartItem, cartItems));
+
   const removeItemHandler = () => dispatch(removeItem(cartItem, cartItems));
   const { imageUrl, name, price, quantity } = cartItem;
   return (

@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import { Fragment } from 'react';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
+import { useDispatch } from 'react-redux/es/hooks/useDispatch';
 
 import { ReactComponent as Logo } from '../../../assets/crown.svg';
 import CartIcon from '../../cart-icon/cart-icon.component';
@@ -8,14 +9,12 @@ import CartDropdown from '../../cart-dropdown/cartdropdown.component';
 
 import { selectIsCartOpened } from '../../../store/cart/cart.selector';
 
-
 // import { UserContext } from '../../../contexts/user.context';
-
 // import { CartContext } from '../../../contexts/cart.context';
-
-import { signOutUser } from '../../../utils/firebase.utils';
+// import { signOutUser } from '../../../utils/firebase.utils';
 
 import { selectCurrentUser } from '../../../store/user/user.selector';
+import { signOutStart } from '../../../store/user/user.actions';
 
 import {
   NavigationContainer,
@@ -30,12 +29,10 @@ const Navigation = () => {
   // this allows us to interact from a component with the redux store
   const currentUser = useSelector(selectCurrentUser);
 
-  const isCartOpened  = useSelector(selectIsCartOpened);
+  const isCartOpened = useSelector(selectIsCartOpened);
+  const dispatch = useDispatch();
 
-
-  const signOutHandler = async () => {
-    await signOutUser();
-  };
+  const signOutHandler = () => dispatch(signOutStart());
 
   return (
     <Fragment>

@@ -104,7 +104,7 @@ export const createUserDoc = async (userAuth, objProps = {}) => {
       console.log('Error Creating the user', err.message);
     }
   }
-  return userSnapShot ;
+  return userSnapShot;
 };
 
 export const createAuthUserWithEmailAndPassword = async (email, password) => {
@@ -112,11 +112,8 @@ export const createAuthUserWithEmailAndPassword = async (email, password) => {
   return await createUserWithEmailAndPassword(auth, email, password);
 };
 
-export const signInAuthUserWithEmailAndPassword = async (
-  auth,
-  email,
-  password
-) => {
+export const signInAuthUserWithEmailAndPassword = async (email, password) => {
+  if (!email || !password) return;
   return await signInWithEmailAndPassword(auth, email, password);
 };
 
